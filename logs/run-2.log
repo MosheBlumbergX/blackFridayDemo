@@ -1,0 +1,27 @@
+
+== 1. Python environment ==
+
+ready
+
+== 2. Publish the Christmas shopping list ==
+Five gift ideas go onto the wanted_products topic.
+Run 1/1: publishing 5 wanted products (run_id=20261125T124129Z)
+  wanted: Nintendo Switch 2
+  wanted: Apple AirPods Pro
+  wanted: LEGO City advent calendar
+  wanted: Ninja air fryer
+  wanted: Dyson Airwrap
+
+== 3. The Flink agent searches real UK shop prices ==
+Per product: search_prices (MCP) -> verdict -> send_email if it is a BEST_DEAL or FAKE_DISCOUNT.
+PRODUCT                  VERDICT         CHEAPEST   MEDIAN  SHOP
+LEGO City advent calendar BEST_DEAL          18.39    26.13  Roys Wroxham
+Nintendo Switch 2        OK_PRICE          399.99  440.995  Smyths Toys
+Apple AirPods Pro        BEST_DEAL         154.80   183.99  SilentSale
+Ninja air fryer          NO_DATA        Not found Not found  Not found
+Dyson Airwrap            BEST_DEAL         299.99   355.36  Dyson UK
+
+Tally: BEST_DEAL=3, NO_DATA=1, OK_PRICE=1
+
+== 4. Done ==
+Check your inbox for the deal alerts.

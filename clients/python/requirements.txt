@@ -1,0 +1,1 @@
+confluent-kafka[schemaregistry,json]>=2.6
