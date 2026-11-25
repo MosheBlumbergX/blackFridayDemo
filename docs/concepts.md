@@ -22,15 +22,17 @@ Source: https://github.com/confluentinc/quickstart-streaming-agents/blob/master/
 
 ## Design differences for this demo
 
-- Lab 1 compares one competitor. The deal hunter compares several shops and also checks a price history to catch fake "was" prices.
-- Shops are mock sites that we host ourselves, so nothing scrapes a real retailer (terms of service, and a public repo).
+- Lab 1 compares one competitor. The deal hunter compares many UK shops for each product and checks any "old price" a shop claims against what the other shops charge, to catch fake discounts.
+- Prices are real. They come from SerpAPI's Google Shopping search, not from scraping shop pages, so no retailer's terms of service are involved.
+- Our own MCP server does the price maths (median, gap to the median, claimed saving) and filters out resale listings, so the model only judges numbers it is given.
 - Prompts and the final verdict are kept structured so the result can be parsed and counted.
 
-## Open questions (to confirm during the build)
+## Decisions made during the build
 
-- Is the Flink agent feature available in AWS `eu-west-2`? If not, fall back to `eu-west-1`.
-- Which model access path: Confluent-hosted inference or own Bedrock keys.
-- Which MCP backend for `http_get` and `send_email`: Confluent-hosted (needs a token) or Zapier.
+- **Region:** Flink is available in AWS `eu-west-2`, so everything runs in London.
+- **Model:** Confluent-hosted inference (`'provider' = 'confluent'`, model `anthropic.claude-sonnet-4-6`), so no Bedrock keys are needed.
+- **MCP server:** our own, on AWS Lambda behind a Function URL, built with Terraform. Confluent's hosted workshop server needs a token from a private list, so a public demo could not rely on it. It also keeps the SerpAPI key out of the agent prompt.
+- **Email:** Amazon SES. In the sandbox, sender and recipient must both be verified, and mail from an address with no DKIM can land in Spam.
 
 ## Sources
 

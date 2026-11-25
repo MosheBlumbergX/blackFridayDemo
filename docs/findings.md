@@ -26,9 +26,11 @@ The verdicts match the rules in the agent prompt (BEST_DEAL needs the cheapest l
 4. **"Sent" is not "delivered", and "delivered" is not "seen".** The tool returned success and the agent said it had sent the alerts, but nothing appeared in the inbox. The Lambda logs and SES statistics showed the mail was sent and accepted, with no bounces. All six alerts from two runs were sitting in the Spam folder. SES sends from an address identity with no DKIM or SPF for its domain, and Gmail treats that as suspicious. The model cannot know any of this, so the demo does not claim delivery. For a real deployment, verify a domain in SES with DKIM.
 5. **Small shops can win.** The AirPods "best deal" is at a small shop (SilentSale), and 4 listings make a thin median. Treat these as leads to check, not a guarantee of a good retailer.
 
-## What I have not verified
+## Cost
 
-- **Alert emails:** confirmed. Three alerts arrived per run (runs 2 and 3), in the Spam folder.
-- **Latency per product:** the run was not timed, so no latency figure is claimed.
-- **FAKE_DISCOUNT path:** no product triggered it in this run, so that branch has not been exercised on real data.
-- **Search cost:** about 26 SerpAPI searches were used in total, including testing, out of 250 on the free plan.
+About 26 SerpAPI searches were used in total, including all testing, out of 250 on the free plan. Each run costs 5 searches.
+
+## Not verified
+
+- **Latency per product:** the runs were not timed, so no latency figure is claimed.
+- **FAKE_DISCOUNT path:** no product triggered it on real data, so that branch of the agent's rules has not been exercised. The deal and no-data paths were.
